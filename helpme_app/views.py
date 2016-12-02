@@ -1,7 +1,7 @@
 import logging
 import requests
 import json
-from helpme_app import ask
+from helpme_app import ask, app
 from clockwork import clockwork
 
 from flask import render_template
