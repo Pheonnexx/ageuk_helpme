@@ -7,7 +7,7 @@ from clockwork import clockwork
 from flask import render_template
 from flask_ask import Ask, statement, question, session
 
-api = clockwork.API(app.config['clockwork_api_key'])
+api = clockwork.API(app.config['CLOCKWORK_API_KEY'])
 logging.getLogger("flask_ask").setLevel(logging.DEBUG)
 
 
