@@ -19,7 +19,7 @@ def start_helpme_app():
 
 
 @ask.intent("HelpMeFriendIntent", convert={'helpmefriend': str})
-def get_help_from_friend():
+def get_help_from_friend(helpmefriend):
     #message person that has been selected from contact list
     message = clockwork.SMS(
     to = '00447960207329',
