@@ -1,6 +1,6 @@
 what_do_you_need: Hello, do you need help or add new contacts?
 
-get_help_from_friend: Contacting {{ helpme }} for help
+get_help_from_friend: Contacting {{ helpmefriend }} for help
 
 get_help: Contacting everyone on your list for help
 

@@ -2,10 +2,12 @@ import logging
 import requests
 import json
 from helpme_app import ask
+from clockwork import clockwork
 
 from flask import render_template
 from flask_ask import Ask, statement, question, session
 
+api = clockwork.API('API_KEY_GOES_HERE')
 logging.getLogger("flask_ask").setLevel(logging.DEBUG)
 
 
@@ -16,17 +18,17 @@ def start_helpme_app():
     return question(what_do_you_need)
 
 
-@ask.intent("HelpMeFriendIntent", convert={'helpme': str})
+@ask.intent("HelpMeFriendIntent", convert={'helpmefriend': str})
 def get_help_from_friend():
     #message person that has been selected from contact list
     message = clockwork.SMS(
     to = '00447960207329',
-    message = 'This is a test message.')
+    message = 'Please help such n such! - test message')
 
     response = api.send(message)
 
     if response.success:
-        statement = render_template('get_help_from_friend', helpme = helpme)
+        statement = render_template('get_help_from_friend', helpmefriend = helpmefriend)
     else:
         statement = render_template('unable_to_contact')
 
