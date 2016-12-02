@@ -28,11 +28,11 @@ def get_help_from_friend(helpmefriend):
     response = api.send(message)
 
     if response.success:
-        statement = render_template('get_help_from_friend', helpmefriend = helpmefriend)
+        msg = render_template('get_help_from_friend', helpmefriend = helpmefriend)
     else:
-        statement = render_template('unable_to_contact')
+        msg = render_template('unable_to_contact_person', helpmefriend = helpmefriend)
 
-    return statement(statement)
+    return statement(msg)
 
 
 @ask.intent("HelpMeIntent")

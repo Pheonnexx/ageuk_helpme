@@ -4,4 +4,6 @@ get_help_from_friend: Contacting {{ helpmefriend }} for help
 
 get_help: Contacting everyone on your list for help
 
-unable_to_contact_person: Sorry, Unable to contact that person
+unable_to_contact_person: Sorry, Unable to contact {{ helpmefriend }}
+
+unable_to_contact: Sorry we are unable to contact anyone
