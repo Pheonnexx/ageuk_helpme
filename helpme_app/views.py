@@ -1,15 +1,15 @@
 import logging
 import requests
 import json
-import messagebird
+from twilio.rest import TwilioRestClient
 from helpme_app import ask, app
 
 from flask import render_template
 from flask_ask import Ask, statement, question, session
 
-client = messagebird.Client('cUTQcjhDaqfscs0pKHhGQk6aR')
 logging.getLogger("flask_ask").setLevel(logging.DEBUG)
-
+account_sid = "ACe69a7715e0d849e09986dddf5b7466ec" # Your Account SID from www.twilio.com/console
+auth_token  = "0281349406c665e16ed332ec68ac185a"  # Your Auth Token from www.twilio.com/console
 
 @ask.launch
 def start_helpme_app():
@@ -21,13 +21,15 @@ def start_helpme_app():
 @ask.intent("HelpMeFriendIntent", convert={'helpmefriend': str})
 def get_help_from_friend(helpmefriend):
     #message person that has been selected from contact list
-    msg = client.message_create(
-        'HEATHER',
-        '+447960207329',
-        'This is a test message.',
-        { 'reference' : 'Heather' }
-    )
-    if msg:
+    client = TwilioRestClient(account_sid, auth_token)
+
+    message = client.messages.create(body="Hello from Python",
+        to="07960207329",    # Replace with your phone number
+        from_="441772367243") # Replace with your Twilio number
+
+    print(message.sid)
+
+    if message:
         msg = render_template('get_help_from_friend', helpmefriend = helpmefriend)
     else:
         msg = render_template('unable_to_contact_person', helpmefriend = helpmefriend)
