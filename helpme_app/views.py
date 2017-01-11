@@ -49,8 +49,7 @@ def add_contact_number(contact_number):
 
 @ask.intent("HelpMeFriendIntent", convert={'helpmefriend': str})
 def get_help_from_friend(helpmefriend):
-    if 'helpmefriend' in convert_errors:
-        return question("Can you please repeat the name?")
+
 
     #message person that has been selected from contact list
     client = TwilioRestClient(account_sid, auth_token)
