@@ -28,7 +28,7 @@ def get_help_from_friend(helpmefriend):
         { 'reference' : 'Heather' }
     )
 
-    if response.success:
+    if message.success:
         msg = render_template('get_help_from_friend', helpmefriend = helpmefriend)
     else:
         msg = render_template('unable_to_contact_person', helpmefriend = helpmefriend)
