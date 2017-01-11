@@ -27,23 +27,6 @@ def get_help_from_friend(helpmefriend):
         'This is a test message.',
         { 'reference' : 'Heather' }
     )
-    import pdb; pdb.set_trace()
-    print('\nThe following information was returned as a Message object:\n')
-    print('  id                : %s' % msg.id)
-    print('  href              : %s' % msg.href)
-    print('  direction         : %s' % msg.direction)
-    print('  type              : %s' % msg.type)
-    print('  originator        : %s' % msg.originator)
-    print('  body              : %s' % msg.body)
-    print('  reference         : %s' % msg.reference)
-    print('  validity          : %s' % msg.validity)
-    print('  gateway           : %s' % msg.gateway)
-    print('  typeDetails       : %s' % msg.typeDetails)
-    print('  datacoding        : %s' % msg.datacoding)
-    print('  mclass            : %s' % msg.mclass)
-    print('  scheduledDatetime : %s' % msg.scheduledDatetime)
-    print('  createdDatetime   : %s' % msg.createdDatetime)
-    print('  recipients        : %s\n' % msg.recipients.items.recipient)
     if msg:
         msg = render_template('get_help_from_friend', helpmefriend = helpmefriend)
     else:
