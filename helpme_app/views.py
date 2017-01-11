@@ -18,8 +18,40 @@ def start_helpme_app():
     return question(what_do_you_need)
 
 
+@ask.intent("AddNewContactIntent")
+def supply_contact_name():
+    please_supply_name = render_template('please_supply_name')
+
+    return question(please_supply_name)
+
+
+@ask.intent("AddContactNameIntent", convert={"contact": str})
+def add_contact_name(contact):
+    contact = session.attributes['contact']
+
+    what_is_contact_number = render_template('what_is_contact_number')
+
+    return question(what_is_contact_number)
+
+
+@ask.intent("AddContactNumberIntent", convert={"contact_number": int})
+def add_contact_number(contact_number):
+    contact_number = session.attributes['contact_number']
+
+    contact_added = render_template('contact_added',
+                                                name = session.attributes['contact'],
+                                                number = session.attributes['contact_number'])
+    print(session.attributes['contact'])
+    print(session.attributes['contact_number'])
+
+    return statement(contact_added)
+
+
 @ask.intent("HelpMeFriendIntent", convert={'helpmefriend': str})
 def get_help_from_friend(helpmefriend):
+    if 'helpmefriend' in convert_errors:
+        return question("Can you please repeat the name?")
+
     #message person that has been selected from contact list
     client = TwilioRestClient(account_sid, auth_token)
 

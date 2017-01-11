@@ -1,5 +1,11 @@
 what_do_you_need: Hello, do you need help or add new contacts?
 
+please_supply_name: Please supply me with a name for your contact
+
+what_is_contact_number: Please supply me with the number for your contact
+
+contact_added: Your new contact {{ name }} on {{ number }} has been added
+
 get_help_from_friend: Contacting {{ helpmefriend }} for help
 
 get_help: Contacting everyone on your list for help
