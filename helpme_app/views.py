@@ -27,7 +27,7 @@ def supply_contact_name():
 
 @ask.intent("AddContactNameIntent", convert={"contact": str})
 def add_contact_name(contact):
-    contact = session.attributes['contact']
+    session.attributes['contact'] = contact
 
     what_is_contact_number = render_template('what_is_contact_number')
 
@@ -36,7 +36,7 @@ def add_contact_name(contact):
 
 @ask.intent("AddContactNumberIntent", convert={"contact_number": int})
 def add_contact_number(contact_number):
-    contact_number = session.attributes['contact_number']
+    session.attributes['contact_number'] = contact_number
 
     contact_added = render_template('contact_added',
                                                 name = session.attributes['contact'],
