@@ -1,0 +1,1 @@
+export MSGBIRD_API_KEY='uSdG4buXOJDltanV22eCNhXbY'

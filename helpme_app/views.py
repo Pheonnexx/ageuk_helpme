@@ -1,13 +1,13 @@
 import logging
 import requests
 import json
+import messagebird
 from helpme_app import ask, app
-from clockwork import clockwork
 
 from flask import render_template
 from flask_ask import Ask, statement, question, session
 
-api = clockwork.API(app.config['CLOCKWORK_API_KEY'])
+client = messagebird.Client('uSdG4buXOJDltanV22eCNhXbY')
 logging.getLogger("flask_ask").setLevel(logging.DEBUG)
 
 
@@ -21,11 +21,12 @@ def start_helpme_app():
 @ask.intent("HelpMeFriendIntent", convert={'helpmefriend': str})
 def get_help_from_friend(helpmefriend):
     #message person that has been selected from contact list
-    message = clockwork.SMS(
-    to = '00447960207329',
-    message = 'Please help such n such! - test message')
-
-    response = api.send(message)
+    message = client.message_create(
+        'HEATHER',
+        '07960207329',
+        'This is a test message.',
+        { 'reference' : 'Heather' }
+    )
 
     if response.success:
         msg = render_template('get_help_from_friend', helpmefriend = helpmefriend)

@@ -1,3 +1,3 @@
 import os
 
-CLOCKWORK_API_KEY = os.environ['CLOCKWORK_API_KEY']
+MSGBIRD_API_KEY = os.environ['MSGBIRD_API_KEY']
