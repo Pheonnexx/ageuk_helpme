@@ -8,9 +8,12 @@ from flask import render_template
 from flask_ask import Ask, statement, question, session
 
 logging.getLogger("flask_ask").setLevel(logging.DEBUG)
-account_sid = "ACe69a7715e0d849e09986dddf5b7466ec" # Your Account SID from www.twilio.com/console
-auth_token  = "0281349406c665e16ed332ec68ac185a"  # Your Auth Token from www.twilio.com/console
 
+account_sid = app.config['ACCOUNT_SID']
+auth_token = app.config['AUTH_TOKEN']
+
+
+# Initial launch of the helpme app
 @ask.launch
 def start_helpme_app():
     what_do_you_need = render_template('what_do_you_need')
@@ -18,6 +21,7 @@ def start_helpme_app():
     return question(what_do_you_need)
 
 
+# The initial question to when someone wants to add a contact, they are asked for the name
 @ask.intent("AddNewContactIntent")
 def supply_contact_name():
     please_supply_name = render_template('please_supply_name')
@@ -25,6 +29,8 @@ def supply_contact_name():
     return question(please_supply_name)
 
 
+# When the user adds a name it is saved in the session, so it is kept until we also have the contact
+# number, which we ask for next
 @ask.intent("AddContactNameIntent", convert={"contact": str})
 def add_contact_name(contact):
     session.attributes['contact'] = contact
@@ -34,6 +40,8 @@ def add_contact_name(contact):
     return question(what_is_contact_number)
 
 
+# After the user provides the number, this is also then saved to a session variable.  This is then
+# to be saved in the database.
 @ask.intent("AddContactNumberIntent", convert={"contact_number": int})
 def add_contact_number(contact_number):
     session.attributes['contact_number'] = contact_number
@@ -43,37 +51,41 @@ def add_contact_number(contact_number):
                                                 number = session.attributes['contact_number'])
     print(session.attributes['contact'])
     print(session.attributes['contact_number'])
+    # The too session variables will also be saved with the amazon user id so that they can then
+    # be accessed via name at a later time.
 
+    # When the contact is added successfully then the user is informed with a statement.  This
+    # effectively ends the session.
     return statement(contact_added)
 
 
+# A person asks to contact someone by supplying the contact name, currently hardcoded to one person,
+# this will soon request help from someone stored in the database
 @ask.intent("HelpMeFriendIntent", convert={'helpmefriend': str})
 def get_help_from_friend(helpmefriend):
 
-
-    #message person that has been selected from contact list
     client = TwilioRestClient(account_sid, auth_token)
 
     message = client.messages.create(body="Hello from Python",
         to="07960207329",    # Replace with your phone number
-        from_="441772367243") # Replace with your Twilio number
+        from_="441772367243") # Current Twilio number, will replace with env var soonish
 
     print(message.sid)
 
     if message:
-        msg = render_template('get_help_from_friend', helpmefriend = helpmefriend)
+        statement_msg = render_template('get_help_from_friend', helpmefriend = helpmefriend)
     else:
-        msg = render_template('unable_to_contact_person', helpmefriend = helpmefriend)
+        statement_msg = render_template('unable_to_contact_person', helpmefriend = helpmefriend)
 
-    return statement(msg)
+    return statement(statement_msg)
 
 
 @ask.intent("HelpMeIntent")
 def get_help():
     #contacting all for help
-    statement = render_template('get_help')
+    statement_msg = render_template('get_help')
 
-    return statement(statement)
+    return statement(statement_msg)
 
 
 @ask.session_ended
